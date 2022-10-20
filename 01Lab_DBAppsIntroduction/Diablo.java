@@ -24,7 +24,6 @@ public class Diablo {
         ResultSet result = query.executeQuery();
 
         if(result.next()){
-            // Valid username
             String dbUsername = result.getString("user_name");
             String dbFirstname = result.getString("first_name");
             String dbLastname = result.getString("last_name");
