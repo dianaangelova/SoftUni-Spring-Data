@@ -55,6 +55,8 @@ public class E04_AddMinion {
             if (generatedTownIDKey != 0) {
                 System.out.printf("Town %s was added to the database.%n", minionTownInput);
             }
+        } else {
+            generatedTownIDKey=resultMinionTownID.getInt(1);
         }
 
         PreparedStatement preparedStatementVillain = connection.prepareStatement(GET_VILLAIN_NAME_SQL);
@@ -80,6 +82,8 @@ public class E04_AddMinion {
             if (generatedVillainIDKey != 0) {
                 System.out.printf("Villain %s was added to the database.%n", villainInput);
             }
+        }else {
+            generatedVillainIDKey=resultVillain.getInt(1);
         }
 
         PreparedStatement preparedStatementInsertMinion = connection.prepareStatement(INSERT_MINION_SQL, Statement.RETURN_GENERATED_KEYS);
@@ -96,15 +100,16 @@ public class E04_AddMinion {
         if (resultMinionID.next()) {
             generatedMinionIDKey = resultMinionID.getInt(1);
         }
-
-
+        
         PreparedStatement preparedStatementInsertMinVillaRelationship = connection.prepareStatement(INSERT_MINION_VILLAIN_SQL);
         preparedStatementInsertMinVillaRelationship.setInt(1, generatedMinionIDKey);
         preparedStatementInsertMinVillaRelationship.setInt(2, generatedVillainIDKey);
 
-        preparedStatementInsertMinVillaRelationship.execute();
+        preparedStatementInsertMinVillaRelationship.executeUpdate();
 
         System.out.printf("Successfully added %s to be minion of %s.", minionNameInput, villainInput);
+
+        connection.close();
 
     }
 }
