@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class E05_ChangeTownNamesCasing {
 
         ResultSet resultTowns = preparedSelectStatement.executeQuery();
 
-        List townsList = new LinkedList();
+        ArrayList <String> townsList = new ArrayList<>();
 
         while (resultTowns.next()) {
             String db_town_name = resultTowns.getString("name");
@@ -38,14 +39,7 @@ public class E05_ChangeTownNamesCasing {
             System.out.println("No town names were affected.");
         } else {
             System.out.printf("%d town names were affected.%n", townsList.size());
-            StringBuilder sb = new StringBuilder("[");
-            String delimiter = "";
-            for (Object o : townsList) {
-                sb.append(delimiter).append(o);
-                delimiter = ", ";
-            }
-            sb.append("]");
-            System.out.println(sb);
+            System.out.println(townsList);
         }
         connection.close();
 
