@@ -1,0 +1,53 @@
+import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
+public class E05_ChangeTownNamesCasing {
+    private static final String UPDATE_TOWNS_SQL = "update towns set name = UPPER(name) where country = ?";
+    private static final String SELECT_TOWNS_SQL = "select name from towns where country = ?";
+
+    public static void main(String[] args) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+
+        Connection connection = Utils.getSQLConnection();
+
+        String inputCountry = scanner.nextLine();
+
+        PreparedStatement preparedInsertStatement = connection.prepareStatement(UPDATE_TOWNS_SQL);
+
+        preparedInsertStatement.setString(1, inputCountry);
+
+        preparedInsertStatement.executeUpdate();
+
+        PreparedStatement preparedSelectStatement = connection.prepareStatement(SELECT_TOWNS_SQL);
+
+        preparedSelectStatement.setString(1, inputCountry);
+
+        ResultSet resultTowns = preparedSelectStatement.executeQuery();
+
+        List townsList = new LinkedList();
+
+        while (resultTowns.next()) {
+            String db_town_name = resultTowns.getString("name");
+
+            townsList.add(db_town_name);
+        }
+
+        if (townsList.isEmpty()) {
+            System.out.println("No town names were affected.");
+        } else {
+            System.out.printf("%d town names were affected.%n", townsList.size());
+            StringBuilder sb = new StringBuilder("[");
+            String delimiter = "";
+            for (Object o : townsList) {
+                sb.append(delimiter).append(o);
+                delimiter = ", ";
+            }
+            sb.append("]");
+            System.out.println(sb);
+        }
+        connection.close();
+
+    }
+}
