@@ -14,6 +14,11 @@ public class JPAMain {
         Student studentJPA = new Student("Pipi");
         entityManager.persist(studentJPA);
 
+        Student found = entityManager.find(Student.class, 1);
+        System.out.println(found.getId() + " " + found.getName());
+
+        entityManager.remove(found);
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }
