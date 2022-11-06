@@ -19,8 +19,8 @@ public class Plane extends Vehicle {
 
     public Plane(String model, String fuelType, int passengerCapacity) {
         this();
-        this.model = getModel();
-        this.fuelType = getFuelType();
+        this.model = model;
+        this.fuelType = fuelType;
         this.passengerCapacity = passengerCapacity;
     }
 
