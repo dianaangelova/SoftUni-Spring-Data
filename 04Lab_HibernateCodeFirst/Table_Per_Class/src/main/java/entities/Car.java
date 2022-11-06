@@ -19,8 +19,8 @@ public class Car extends Vehicle {
 
     public Car(String model, String fuelType, int seats) {
         this();
-        this.model=getModel();
-        this.fuelType=getFuelType();
+        this.model=model;
+        this.fuelType=fuelType;
         this.seats=seats;
     }
 
